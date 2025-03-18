@@ -1,9 +1,12 @@
 import numpy as np
 import random
 
-def generativ_algorthm(current_step, current_min=None, current_path=None, limit=900):
-    if limit == 0:
+import sys
+sys.setrecursionlimit(15000)
+def generativ_algorthm(current_step, current_min=None, current_path=None, limit=10000, repet=0):
+    if limit == 0 or repet == 500:
         return current_min, current_path
+    
     
     keys = list(points.keys())
     values = []
@@ -28,7 +31,12 @@ def generativ_algorthm(current_step, current_min=None, current_path=None, limit=
     
     if current_min is None or currently_min < current_min:
         current_min, current_path = currently_min, ord_arr[currently_min]
-    
+        repet=0
+        print("min value found:", current_min )
+        print("best path:", current_path)
+        
+        print(current_step)
+            
     if current_min <= 28:
         return current_min, current_path
     
@@ -53,6 +61,9 @@ def generativ_algorthm(current_step, current_min=None, current_path=None, limit=
         selected_sequences.pop()
         elements_cross = elements_cross[:-1]
     
+    
+    
+    
     new_steps = []
     for i in range(0, len(selected_sequences), 2):
         parent1, parent2 = selected_sequences[i], selected_sequences[i + 1]
@@ -75,7 +86,8 @@ def generativ_algorthm(current_step, current_min=None, current_path=None, limit=
     combined_steps = new_steps + list(ord_arr.values())
     steps = np.array(combined_steps, dtype=object)
     
-    return generativ_algorthm(steps, current_min, current_path, limit-1)
+    
+    return generativ_algorthm(steps, current_min, current_path, limit-1, repet+1)
 
 points = {
     "p1": [-2.750, -1.700, 0.100],
@@ -89,7 +101,6 @@ points = {
 
 steps = [random.sample(range(1, 8), 7) for _ in range(10)]
 steps = np.array(steps)
-
 best_result, best_path = generativ_algorthm(steps)
     
 print("min value found:", best_result)
