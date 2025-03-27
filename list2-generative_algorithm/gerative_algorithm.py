@@ -4,7 +4,7 @@ import random
 import sys
 sys.setrecursionlimit(15000)
 def generativ_algorthm(current_step, current_min=None, current_path=None, limit=10000, repet=0):
-    if limit == 0 or repet == 500:
+    if limit == 0 or repet == 1000:
         return current_min, current_path
     
     
@@ -102,8 +102,11 @@ points = {
 steps = [random.sample(range(1, 8), 7) for _ in range(10)]
 steps = np.array(steps)
 best_result, best_path = generativ_algorthm(steps)
-    
+
+
+print("\n"+"=-"*20)    
 print("min value found:", best_result)
+print("=-"*20)    
 print("best path:", best_path)
 
 for idx in best_path:
